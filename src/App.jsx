@@ -1,4 +1,17 @@
 import {useState, useEffect, useRef} from "react";
+import {
+  owner,
+  stats,
+  currentStatus,
+  education,
+  philosophy,
+  experiences,
+  projects,
+  skills,
+  whyMe,
+  testimonials,
+  navLinks,
+} from "./data";
 
 const T = {
   ink: "#0a0a0f",
@@ -13,168 +26,6 @@ const T = {
   faint: "rgba(255,255,255,0.18)",
   ghost: "rgba(255,255,255,0.07)",
 };
-
-const experiences = [
-  {
-    company: "Self-Employed",
-    role: "Freelance Software Engineer",
-    period: "2025 – Present",
-    type: "Remote · North Carolina",
-    color: "#c9a84c",
-    accent: "rgba(201,168,76,0.10)",
-    story:
-      "Went independent and haven't looked back. I work with startups and small businesses to build tools that solve real operational problems, the kind that were eating hours of someone's week before.",
-    bullets: [
-      "Built Python automation pipelines that cut manual processing time by 40%+ across three clients",
-      "Delivered full-stack web applications end-to-end, consistently earned repeat business",
-      "Advised founders on architecture early, preventing expensive re-engineering down the line",
-      "Maintained 100% on-time delivery rate across all freelance engagements",
-    ],
-  },
-  {
-    company: "CGI",
-    role: "Associate Software Engineer",
-    period: "2020 – 2024",
-    type: "Contract · Hybrid, Fairfax County, VA",
-    color: "#818cf8",
-    accent: "rgba(129,140,248,0.10)",
-    story:
-      "Four years at one of the biggest IT firms in the world. I worked on software used daily by thousands: government systems, internal tools, client-facing platforms. Humbling and educational in equal measure.",
-    bullets: [
-      "Built and maintained software used daily by thousands across government and commercial clients",
-      "Tracked down and fixed performance bottlenecks in legacy systems, cutting response times by 35%",
-      "Shipped consistently across Agile sprints and learned what 'done' actually means in a large org",
-      "Wrote code that other engineers could read, extend, and trust",
-    ],
-  },
-  {
-    company: "Capital One",
-    role: "Junior Software Engineer",
-    period: "2016 – 2020",
-    type: "Full-time · On-site, Virginia",
-    color: "#4ade80",
-    accent: "rgba(74,222,128,0.08)",
-    story:
-      "My first real engineering job, and honestly the place that made me a real engineer. Nothing focuses you like your code touching millions of financial accounts.",
-    bullets: [
-      "Shipped features for financial products used by millions of Capital One customers",
-      "Built a test coverage initiative that raised critical-path coverage from 42% to 91%",
-      "Collaborated with product, QA, and DevOps and learned how software actually ships",
-      "Grew from 'writes code' to 'thinks about systems', and that was the real education",
-    ],
-  },
-];
-
-const projects = [
-  {
-    name: "Workflow Automation Platform",
-    label: "⚙",
-    tags: ["Python", "REST APIs", "Automation"],
-    color: "#c9a84c",
-    story:
-      "A logistics company was manually compiling ops reports every morning. I automated the entire pipeline. The reports just show up now, and their ops team reclaimed 3 hours a day, every day.",
-    impact: "3 hrs/day saved",
-    type: "Freelance",
-  },
-  {
-    name: "Real-Time Analytics Dashboard",
-    label: "◈",
-    tags: ["React", "Data Modeling", "PostgreSQL"],
-    color: "#818cf8",
-    story:
-      "A client needed live KPI visibility without digging through spreadsheets. Built a React dashboard pulling from their existing data sources. They check it every morning instead of emailing me questions.",
-    impact: "Real-time visibility",
-    type: "Freelance",
-  },
-  {
-    name: "Customer Onboarding Portal",
-    label: "▸",
-    tags: ["Full-Stack", "Node.js", "UX Design"],
-    color: "#4ade80",
-    story:
-      "A SaaS startup's onboarding was entirely manual: PDFs, emails, back-and-forth. I designed and shipped a self-service portal. Activation time dropped from 2 days to under 20 minutes.",
-    impact: "2 days → 20 min",
-    type: "Freelance",
-  },
-];
-
-const skills = [
-  {
-    cat: "Languages",
-    items: ["Python", "JavaScript / TypeScript", "C++", "SQL"],
-  },
-  {
-    cat: "Frontend",
-    items: ["React", "HTML / CSS", "Responsive Design", "Accessibility"],
-  },
-  {cat: "Backend & APIs", items: ["Node.js", "REST APIs", "FastAPI", "Flask"]},
-  {
-    cat: "Data Engineering",
-    items: ["Data Modeling", "Big Data", "ETL Pipelines", "Analytics"],
-  },
-  {cat: "Cloud & DevOps", items: ["AWS", "Git / GitHub", "CI/CD", "Linux"]},
-  {cat: "Databases", items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"]},
-];
-
-const whyMe = [
-  {
-    icon: "◎",
-    title: "I own the outcome.",
-    body: "I don't just close tickets. I care whether the thing I built actually helped. If something's not working, I'll tell you before you notice.",
-  },
-  {
-    icon: "◉",
-    title: "I communicate clearly.",
-    body: "No jargon unless you want it. I translate between engineer and human fluently. Updates are honest, estimates are realistic, and blockers surface early.",
-  },
-  {
-    icon: "◈",
-    title: "I think in systems.",
-    body: "I'm not just thinking about today's feature. I'm thinking about what it costs you in six months when requirements change. Good architecture is an investment.",
-  },
-  {
-    icon: "▸",
-    title: "I ship.",
-    body: "Nine years of professional experience, zero missed deadlines. I've worked at a bank, a government contractor, and on my own. The common thread: things get delivered.",
-  },
-];
-
-const testimonials = [
-  {
-    initials: "SK",
-    name: "Sarah K.",
-    role: "Founder, LogiFlow",
-    color: "#c9a84c",
-    quote:
-      "Jordan took what felt like an impossible automation problem and made it look simple. The reporting system he built pays for itself every week. Best engineering investment I've made.",
-    stars: 5,
-  },
-  {
-    initials: "MT",
-    name: "Marcus T.",
-    role: "CTO, Northgate SaaS",
-    color: "#818cf8",
-    quote:
-      "Rare to find someone who can move fast and think ahead. Jordan identified three architectural issues in our MVP that would've cost us months to fix later. Hired him again immediately.",
-    stars: 5,
-  },
-  {
-    initials: "AJ",
-    name: "Aisha J.",
-    role: "Head of Ops, Brandwell",
-    color: "#4ade80",
-    quote:
-      "The dashboard Jordan built transformed how our team starts every morning. Clean, fast, and he actually explained what he was building throughout. Would recommend without hesitation.",
-    stars: 5,
-  },
-];
-
-const stats = [
-  {num: "9+", label: "Years Exp."},
-  {num: "40%+", label: "Time Saved"},
-  {num: "100%", label: "On-Time"},
-  {num: "3", label: "Domains"},
-];
 
 function useInView(threshold = 0.12) {
   const ref = useRef(null);
@@ -260,7 +111,6 @@ function NavBar() {
     window.addEventListener("scroll", h, {passive: true});
     return () => window.removeEventListener("scroll", h);
   }, []);
-  const links = ["about", "projects", "experience", "skills", "contact"];
   return (
     <nav
       role="navigation"
@@ -284,7 +134,7 @@ function NavBar() {
     >
       <a
         href="#home"
-        aria-label="Jordan Morris home"
+        aria-label={`${owner.name} home`}
         style={{
           display: "flex",
           alignItems: "center",
@@ -307,7 +157,7 @@ function NavBar() {
           }}
         >
           <img
-            src="/image.png"
+            src={owner.photo}
             alt=""
             style={{
               width: "100%",
@@ -317,8 +167,10 @@ function NavBar() {
             }}
             onError={(e) => {
               e.target.style.display = "none";
-              e.target.parentNode.innerHTML =
-                '<span style="font-size:11px;font-weight:700;color:#c9a84c;letter-spacing:0.04em">JM</span>';
+              e.target.parentNode.innerHTML = `<span style="font-size:11px;font-weight:700;color:#c9a84c;letter-spacing:0.04em">${owner.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}</span>`;
             }}
           />
         </div>
@@ -331,7 +183,8 @@ function NavBar() {
             color: T.white,
           }}
         >
-          Jordan<span style={{color: T.gold}}>.</span>
+          {owner.shortName}
+          <span style={{color: T.gold}}>.</span>
         </span>
       </a>
 
@@ -345,7 +198,7 @@ function NavBar() {
           padding: 0,
         }}
       >
-        {links.map((l) => (
+        {navLinks.map((l) => (
           <li key={l}>
             <a
               href={`#${l}`}
@@ -432,7 +285,7 @@ function NavBar() {
             gap: 20,
           }}
         >
-          {links.map((l) => (
+          {navLinks.map((l) => (
             <a
               key={l}
               href={`#${l}`}
@@ -469,7 +322,6 @@ function HeroSection() {
         paddingTop: 80,
       }}
     >
-      {/* Background grid */}
       <div
         style={{
           position: "absolute",
@@ -515,9 +367,7 @@ function HeroSection() {
           animation: "slideUp 0.8s ease forwards",
         }}
       >
-        {/* --- MOBILE FIRST: single column, card below text --- */}
         <div className="hero-layout">
-          {/* Text column */}
           <div className="hero-text">
             <h1
               style={{
@@ -530,7 +380,7 @@ function HeroSection() {
               }}
             >
               <span style={{color: T.white}}>Hey, I'm </span>
-              <span style={{color: T.gold}}>Jordan.</span>
+              <span style={{color: T.gold}}>{owner.shortName}.</span>
             </h1>
 
             <h2
@@ -545,15 +395,7 @@ function HeroSection() {
                 letterSpacing: "0.01em",
               }}
             >
-              <TypeWriter
-                strings={[
-                  "Software Engineer.",
-                  "Data Engineer.",
-                  "Systems Consultant.",
-                  "I build things that work.",
-                ]}
-                speed={55}
-              />
+              <TypeWriter strings={owner.tagline} speed={55} />
             </h2>
 
             <p
@@ -566,10 +408,7 @@ function HeroSection() {
                 fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              I'm a software engineer who enjoys solving messy problems with
-              clean systems. Over 9 years across finance, government consulting,
-              and freelance work, building automation tools that save real hours
-              and full-stack products used by real customers every day.
+              {owner.bio}
             </p>
             <p
               style={{
@@ -581,14 +420,12 @@ function HeroSection() {
                 fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              When I'm not coding, I'm usually hiking the Blue Ridge, deep in a
-              data rabbit hole, or trying to finally learn Rust.
+              {owner.bioExtra}
             </p>
 
             <div style={{display: "flex", gap: 14, flexWrap: "wrap"}}>
               <a
                 href="#contact"
-                className="btn-primary"
                 style={{
                   padding: "14px clamp(20px,4vw,36px)",
                   background: T.gold,
@@ -655,14 +492,9 @@ function HeroSection() {
                 paddingTop: 24,
               }}
             >
-              {[
-                {e: "☕", t: "Coffee-powered"},
-                {e: "🏔", t: "Blue Ridge hiker"},
-                {e: "🎓", t: "Duke MCA '27"},
-                {e: "📍", t: "Morganton, NC"},
-              ].map((d) => (
+              {owner.funFacts.map((d) => (
                 <div
-                  key={d.t}
+                  key={d.label}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -672,14 +504,13 @@ function HeroSection() {
                     fontFamily: "'DM Sans', sans-serif",
                   }}
                 >
-                  <span>{d.e}</span>
-                  {d.t}
+                  <span>{d.emoji}</span>
+                  {d.label}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Card column */}
           <div className="hero-card-wrap">
             <div
               style={{
@@ -692,7 +523,6 @@ function HeroSection() {
                 margin: "0 auto",
               }}
             >
-              {/* Portrait orb */}
               <div
                 style={{
                   position: "relative",
@@ -795,8 +625,8 @@ function HeroSection() {
                     }}
                   >
                     <img
-                      src="/image.png"
-                      alt="Jordan Morris"
+                      src={owner.photo}
+                      alt={owner.name}
                       style={{
                         width: "100%",
                         height: "100%",
@@ -805,15 +635,16 @@ function HeroSection() {
                       }}
                       onError={(e) => {
                         e.target.style.display = "none";
-                        e.target.parentNode.innerHTML =
-                          '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#141424;font-size:36px;font-weight:700;color:#c9a84c;font-family:Cormorant Garamond,serif">JM</div>';
+                        e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#141424;font-size:36px;font-weight:700;color:#c9a84c;font-family:Cormorant Garamond,serif">${owner.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}</div>`;
                       }}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Info card */}
               <div
                 style={{
                   marginTop: 20,
@@ -845,7 +676,7 @@ function HeroSection() {
                       color: T.white,
                     }}
                   >
-                    Jordan Morris
+                    {owner.name}
                   </div>
                   <div
                     style={{
@@ -857,7 +688,7 @@ function HeroSection() {
                       marginTop: 3,
                     }}
                   >
-                    Software & Data Engineer
+                    {owner.title}
                   </div>
                 </div>
                 <div
@@ -907,17 +738,9 @@ function HeroSection() {
                 </div>
                 <div style={{display: "flex", gap: 8, marginTop: 10}}>
                   {[
-                    {label: "GitHub", icon: "GH", href: "https://github.com"},
-                    {
-                      label: "LinkedIn",
-                      icon: "LI",
-                      href: "https://www.linkedin.com/in/jordan-morris-6a0869408/",
-                    },
-                    {
-                      label: "Email",
-                      icon: "@",
-                      href: "mailto:jordan.morris@example.com",
-                    },
+                    {label: "GitHub", icon: "GH", href: owner.github},
+                    {label: "LinkedIn", icon: "LI", href: owner.linkedin},
+                    {label: "Email", icon: "@", href: `mailto:${owner.email}`},
                   ].map((s) => (
                     <a
                       key={s.label}
@@ -959,7 +782,6 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div
         style={{
           position: "absolute",
@@ -1030,25 +852,7 @@ function AboutSection() {
                 gap: 10,
               }}
             >
-              {[
-                {
-                  icon: "🎓",
-                  text: "Pursuing my MCA at Duke University, graduating 2027",
-                },
-                {
-                  icon: "⚙",
-                  text: "Building Python automation tools for small businesses",
-                },
-                {
-                  icon: "☁",
-                  text: "Going deep on cloud-native architecture (AWS, mostly)",
-                },
-                {
-                  icon: "🤝",
-                  text: "Open to freelance projects and consulting work",
-                },
-                {icon: "📍", text: "Based in Morganton, North Carolina"},
-              ].map((c, i) => (
+              {currentStatus.map((c, i) => (
                 <div
                   key={i}
                   style={{
@@ -1094,22 +898,7 @@ function AboutSection() {
                 gap: 10,
               }}
             >
-              {[
-                {
-                  school: "Duke University",
-                  degree: "MCA — Data Processing & Technology",
-                  dates: "2025 – 2027",
-                  color: "#c9a84c",
-                  status: "In Progress",
-                },
-                {
-                  school: "University of Virginia",
-                  degree: "BTech — Computer Science",
-                  dates: "2013 – 2017",
-                  color: "#818cf8",
-                  status: "Completed",
-                },
-              ].map((e) => (
+              {education.map((e) => (
                 <div
                   key={e.school}
                   style={{
@@ -1203,32 +992,23 @@ function AboutSection() {
                 }}
               />
               <blockquote style={{margin: 0, padding: 0}}>
-                <p
-                  style={{
-                    color: T.muted,
-                    lineHeight: 1.95,
-                    fontSize: "clamp(14px,2vw,16px)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    margin: "0 0 20px",
-                  }}
-                >
-                  I got into software because I liked puzzles. I stayed because
-                  I realised you could build a thing on a Tuesday that a real
-                  person would use on a Wednesday to do their job faster.
-                </p>
-                <p
-                  style={{
-                    color: T.faint,
-                    lineHeight: 1.95,
-                    fontSize: "clamp(13px,1.8vw,15px)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    margin: "0 0 20px",
-                  }}
-                >
-                  That feedback loop of building something and watching someone
-                  actually use it never gets old. It's what keeps me coming
-                  back.
-                </p>
+                {philosophy.paragraphs.map((p, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      color: i === 0 ? T.muted : T.faint,
+                      lineHeight: 1.95,
+                      fontSize:
+                        i === 0
+                          ? "clamp(14px,2vw,16px)"
+                          : "clamp(13px,1.8vw,15px)",
+                      fontFamily: "'DM Sans', sans-serif",
+                      margin: "0 0 20px",
+                    }}
+                  >
+                    {p}
+                  </p>
+                ))}
                 <p
                   style={{
                     color: "rgba(255,255,255,0.28)",
@@ -1239,8 +1019,7 @@ function AboutSection() {
                     margin: 0,
                   }}
                 >
-                  "Good software isn't the cleverest code. It's the thing that
-                  gets out of the way and lets people do what they came to do."
+                  "{philosophy.quote}"
                 </p>
               </blockquote>
             </div>
@@ -2081,24 +1860,25 @@ function ContactSection() {
               {
                 icon: "✉",
                 label: "Email",
-                value: "jordan.morris@example.com",
-                href: "mailto:jordan.morris@example.com",
+                value: owner.email,
+                href: `mailto:${owner.email}`,
               },
               {
                 icon: "💼",
                 label: "LinkedIn",
                 value: "linkedin.com/in/jordanmorris",
-                href: "https://www.linkedin.com/in/jordan-morris-6a0869408/",
+                href: owner.linkedin,
               },
               {
                 icon: "⌥",
                 label: "GitHub",
                 value: "github.com/jordanmorris",
-                href: "https://github.com",
+                href: owner.github,
               },
             ].map((l) => (
               <a
-                target="blank"
+                target="_blank"
+                rel="noreferrer"
                 key={l.label}
                 href={l.href}
                 style={{
@@ -2168,9 +1948,9 @@ function ContactSection() {
               }}
             >
               {[
-                {e: "📍", t: "Morganton, NC"},
-                {e: "💼", t: "Remote · Hybrid · On-site"},
-                {e: "⏱", t: "Replies same day"},
+                {e: "📍", t: owner.location},
+                {e: "💼", t: owner.availability},
+                {e: "⏱", t: owner.responseTime},
               ].map((d) => (
                 <div
                   key={d.t}
@@ -2389,7 +2169,8 @@ function Footer() {
               marginBottom: 4,
             }}
           >
-            Jordan<span style={{color: T.gold}}>.</span>
+            {owner.shortName}
+            <span style={{color: T.gold}}>.</span>
           </div>
           <p
             style={{
@@ -2399,15 +2180,20 @@ function Footer() {
               margin: 0,
             }}
           >
-            © 2025 Jordan Morris · Software & Data Engineer
+            {owner.copyright}
           </p>
         </div>
         <div style={{display: "flex", gap: 24}}>
-          {["GitHub", "LinkedIn", "Email"].map((l) => (
+          {[
+            {label: "GitHub", href: owner.github},
+            {label: "LinkedIn", href: owner.linkedin},
+            {label: "Email", href: `mailto:${owner.email}`},
+          ].map((l) => (
             <a
-              target="blank"
-              key={l}
-              href="#contact"
+              target="_blank"
+              rel="noreferrer"
+              key={l.label}
+              href={l.href}
               style={{
                 color: "rgba(255,255,255,0.22)",
                 fontSize: 12,
@@ -2422,7 +2208,7 @@ function Footer() {
                 (e.target.style.color = "rgba(255,255,255,0.22)")
               }
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </div>
@@ -2434,7 +2220,7 @@ function Footer() {
             margin: 0,
           }}
         >
-          Built with React · Morganton, NC
+          {owner.footerNote}
         </p>
       </div>
     </footer>
@@ -2512,7 +2298,6 @@ export default function App() {
         ::-webkit-scrollbar-track { background: #0a0a0f; }
         ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.35); border-radius: 2px; }
         ::selection { background: rgba(201,168,76,0.25); color: #f0ead8; }
-
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes slideUp { from { opacity:0; transform:translateY(36px) } to { opacity:1; transform:none } }
         @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
@@ -2521,7 +2306,6 @@ export default function App() {
         textarea { font-family: 'DM Sans', sans-serif !important; }
         input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
 
-        /* ─── HERO LAYOUT ─── */
         .hero-layout {
           display: grid;
           grid-template-columns: 1fr 460px;
@@ -2529,65 +2313,35 @@ export default function App() {
           align-items: center;
         }
         .hero-card-wrap { display: flex; justify-content: center; }
-
-        /* ─── DESKTOP NAV ─── */
         .nav-links { display: flex !important; }
         .nav-toggle { display: none !important; }
         .hire-btn { display: inline-block !important; }
 
-        /* ─── TABLET: 768–1024px ─── */
         @media (max-width: 1024px) {
-          .hero-layout {
-            grid-template-columns: 1fr 380px;
-            gap: 40px;
-          }
+          .hero-layout { grid-template-columns: 1fr 380px; gap: 40px; }
         }
 
-        /* ─── MOBILE: ≤767px ─── */
         @media (max-width: 767px) {
-          /* Hero: stack vertically, card first on mobile (reorder) */
-          .hero-layout {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-          }
-          .hero-card-wrap {
-            order: -1;
-          }
-          /* Two-col sections go single col */
-          .two-col-grid {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-          }
-          /* Contact grid */
-          .contact-grid {
-            grid-template-columns: 1fr !important;
-            gap: 36px !important;
-          }
-          /* Experience timeline goes stacked */
-          .exp-row {
-            justify-content: center !important;
-          }
-          .exp-row > article {
-            width: 100% !important;
-          }
-          .timeline-line, .timeline-dot {
-            display: none !important;
-          }
-          /* Nav */
+          .hero-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .hero-card-wrap { order: -1; }
+          .two-col-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .contact-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .exp-row { justify-content: center !important; }
+          .exp-row > article { width: 100% !important; }
+          .timeline-line, .timeline-dot { display: none !important; }
           .nav-links { display: none !important; }
           .nav-toggle { display: block !important; }
           .hire-btn { display: none !important; }
         }
 
-        /* ─── SMALL MOBILE: ≤480px ─── */
         @media (max-width: 480px) {
           .hero-layout { gap: 28px !important; }
         }
 
-        /* ─── ACCESSIBILITY ─── */
         @media (prefers-reduced-motion: reduce) {
           * { animation: none !important; transition: none !important; }
         }
+
         a:focus-visible, button:focus-visible {
           outline: 2px solid #c9a84c;
           outline-offset: 3px;
