@@ -1,7 +1,3 @@
-// data.js — All portfolio content lives here.
-// Edit this file to update anything on the site. No JSX knowledge needed.
-
-// ─── OWNER ───────────────────────────────────────────────────────────────────
 export const owner = {
   name: "Jordan Morris",
   shortName: "Jordan",
@@ -41,7 +37,6 @@ export const stats = [
   {num: "3", label: "Domains"},
 ];
 
-// ─── ABOUT — CURRENT STATUS ──────────────────────────────────────────────────
 export const currentStatus = [
   {icon: "🎓", text: "Pursuing my MCA at Duke University, graduating 2027"},
   {icon: "⚙", text: "Building Python automation tools for small businesses"},
@@ -50,7 +45,6 @@ export const currentStatus = [
   {icon: "📍", text: "Based in Morganton, North Carolina"},
 ];
 
-// ─── EDUCATION ───────────────────────────────────────────────────────────────
 export const education = [
   {
     school: "Duke University",
@@ -68,7 +62,6 @@ export const education = [
   },
 ];
 
-// ─── PHILOSOPHY ──────────────────────────────────────────────────────────────
 export const philosophy = {
   paragraphs: [
     "I got into software because I liked puzzles. I stayed because I realised you could build a thing on a Tuesday that a real person would use on a Wednesday to do their job faster.",
@@ -78,7 +71,6 @@ export const philosophy = {
     "Good software isn't the cleverest code. It's the thing that gets out of the way and lets people do what they came to do.",
 };
 
-// ─── EXPERIENCE ──────────────────────────────────────────────────────────────
 export const experiences = [
   {
     company: "Self-Employed",
@@ -130,7 +122,6 @@ export const experiences = [
   },
 ];
 
-// ─── PROJECTS ────────────────────────────────────────────────────────────────
 export const projects = [
   {
     name: "Workflow Automation Platform",
@@ -167,7 +158,6 @@ export const projects = [
   },
 ];
 
-// ─── SKILLS ──────────────────────────────────────────────────────────────────
 export const skills = [
   {
     cat: "Languages",
@@ -219,7 +209,6 @@ export const whyMe = [
   },
 ];
 
-// ─── TESTIMONIALS ────────────────────────────────────────────────────────────
 export const testimonials = [
   {
     initials: "SK",
