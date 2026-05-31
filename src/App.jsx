@@ -170,10 +170,10 @@ const testimonials = [
 ];
 
 const stats = [
-  {num: "9+", label: "Years Experience"},
-  {num: "40%+", label: "Avg. Time Saved"},
-  {num: "100%", label: "On-Time Delivery"},
-  {num: "3", label: "Industry Domains"},
+  {num: "9+", label: "Years Exp."},
+  {num: "40%+", label: "Time Saved"},
+  {num: "100%", label: "On-Time"},
+  {num: "3", label: "Domains"},
 ];
 
 function useInView(threshold = 0.12) {
@@ -271,7 +271,7 @@ function NavBar() {
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: "0 40px",
+        padding: "0 clamp(16px, 4vw, 40px)",
         height: 64,
         background: scrolled ? "rgba(10,10,15,0.94)" : "transparent",
         backdropFilter: scrolled ? "blur(24px)" : "none",
@@ -303,6 +303,7 @@ function NavBar() {
             alignItems: "center",
             justifyContent: "center",
             overflow: "hidden",
+            flexShrink: 0,
           }}
         >
           <img
@@ -335,6 +336,7 @@ function NavBar() {
       </a>
 
       <ul
+        className="nav-links"
         style={{
           display: "flex",
           gap: 36,
@@ -342,7 +344,6 @@ function NavBar() {
           margin: 0,
           padding: 0,
         }}
-        className="nav-links"
       >
         {links.map((l) => (
           <li key={l}>
@@ -367,9 +368,10 @@ function NavBar() {
         ))}
       </ul>
 
-      <div style={{display: "flex", alignItems: "center", gap: 16}}>
+      <div style={{display: "flex", alignItems: "center", gap: 12}}>
         <a
           href="#contact"
+          className="hire-btn"
           style={{
             padding: "8px 22px",
             border: `1px solid ${T.goldBdr}`,
@@ -424,7 +426,7 @@ function NavBar() {
             background: "rgba(10,10,15,0.98)",
             backdropFilter: "blur(24px)",
             borderBottom: "1px solid rgba(201,168,76,0.12)",
-            padding: "24px 40px",
+            padding: "24px clamp(16px,4vw,40px)",
             display: "flex",
             flexDirection: "column",
             gap: 20,
@@ -458,7 +460,7 @@ function HeroSection() {
     <section
       id="home"
       style={{
-        minHeight: "100vh",
+        minHeight: "100svh",
         position: "relative",
         display: "flex",
         alignItems: "center",
@@ -467,6 +469,7 @@ function HeroSection() {
         paddingTop: 80,
       }}
     >
+      {/* Background grid */}
       <div
         style={{
           position: "absolute",
@@ -481,8 +484,8 @@ function HeroSection() {
           position: "absolute",
           top: "15%",
           right: "8%",
-          width: 560,
-          height: 560,
+          width: "min(560px, 60vw)",
+          height: "min(560px, 60vw)",
           borderRadius: "50%",
           pointerEvents: "none",
           background:
@@ -494,8 +497,8 @@ function HeroSection() {
           position: "absolute",
           bottom: "15%",
           left: "2%",
-          width: 380,
-          height: 380,
+          width: "min(380px, 45vw)",
+          height: "min(380px, 45vw)",
           borderRadius: "50%",
           pointerEvents: "none",
           background:
@@ -504,466 +507,463 @@ function HeroSection() {
       />
 
       <div
-        className="hero-grid"
         style={{
           maxWidth: 1160,
           margin: "0 auto",
-          padding: "0 40px",
-          display: "grid",
-          gridTemplateColumns: "1fr 460px",
-          gap: 80,
-          alignItems: "center",
+          padding: "40px clamp(16px,4vw,40px)",
           width: "100%",
+          animation: "slideUp 0.8s ease forwards",
         }}
       >
-        <div style={{animation: "slideUp 0.8s ease forwards"}}>
-          <h1
-            style={{
-              fontSize: "clamp(48px, 5.5vw, 80px)",
-              fontWeight: 700,
-              lineHeight: 1.02,
-              margin: "0 0 8px",
-              fontFamily: "'Cormorant Garamond', serif",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            <span style={{color: T.white}}>Hey, I'm </span>
-            <span style={{color: T.gold}}>Jordan.</span>
-          </h1>
-
-          <h2
-            style={{
-              fontSize: "clamp(20px, 2.2vw, 28px)",
-              fontWeight: 400,
-              color: T.muted,
-              margin: "0 0 32px",
-              fontFamily: "'Cormorant Garamond', serif",
-              fontStyle: "italic",
-              minHeight: 40,
-              letterSpacing: "0.01em",
-            }}
-          >
-            <TypeWriter
-              strings={[
-                "Software Engineer.",
-                "Data Engineer.",
-                "Systems Consultant.",
-                "I build things that work.",
-              ]}
-              speed={55}
-            />
-          </h2>
-
-          <p
-            style={{
-              color: T.muted,
-              lineHeight: 1.88,
-              maxWidth: 520,
-              margin: "0 0 14px",
-              fontSize: 16,
-              fontFamily: "'DM Sans', sans-serif",
-            }}
-          >
-            I'm a software engineer who enjoys solving messy problems with clean
-            systems. Over 9 years across finance, government consulting, and
-            freelance work, building automation tools that save real hours and
-            full-stack products used by real customers every day.
-          </p>
-          <p
-            style={{
-              color: T.faint,
-              lineHeight: 1.88,
-              maxWidth: 520,
-              margin: "0 0 44px",
-              fontSize: 15,
-              fontFamily: "'DM Sans', sans-serif",
-            }}
-          >
-            When I'm not coding, I'm usually hiking the Blue Ridge, deep in a
-            data rabbit hole, or trying to finally learn Rust.
-          </p>
-
-          <div style={{display: "flex", gap: 16, flexWrap: "wrap"}}>
-            <a
-              href="#contact"
+        {/* --- MOBILE FIRST: single column, card below text --- */}
+        <div className="hero-layout">
+          {/* Text column */}
+          <div className="hero-text">
+            <h1
               style={{
-                padding: "15px 36px",
-                background: T.gold,
-                color: T.ink,
-                borderRadius: 4,
+                fontSize: "clamp(40px, 8vw, 80px)",
                 fontWeight: 700,
-                fontSize: 12,
-                textDecoration: "none",
-                letterSpacing: "0.12em",
-                fontFamily: "'Syne', sans-serif",
-                textTransform: "uppercase",
-                transition: "all 0.2s",
-                display: "inline-block",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = T.cream;
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 12px 36px rgba(201,168,76,0.3)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = T.gold;
-                e.currentTarget.style.transform = "";
-                e.currentTarget.style.boxShadow = "";
+                lineHeight: 1.02,
+                margin: "0 0 8px",
+                fontFamily: "'Cormorant Garamond', serif",
+                letterSpacing: "-0.01em",
               }}
             >
-              Let's Talk →
-            </a>
-            <a
-              href="#projects"
+              <span style={{color: T.white}}>Hey, I'm </span>
+              <span style={{color: T.gold}}>Jordan.</span>
+            </h1>
+
+            <h2
               style={{
-                padding: "15px 36px",
-                borderRadius: 4,
-                border: "1px solid rgba(255,255,255,0.12)",
+                fontSize: "clamp(18px, 3.5vw, 28px)",
+                fontWeight: 400,
                 color: T.muted,
-                fontSize: 12,
-                textDecoration: "none",
-                fontWeight: 600,
-                fontFamily: "'Syne', sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = T.goldBdr;
-                e.currentTarget.style.color = T.gold;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
-                e.currentTarget.style.color = T.muted;
+                margin: "0 0 28px",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: "italic",
+                minHeight: 36,
+                letterSpacing: "0.01em",
               }}
             >
-              See My Work
-            </a>
-          </div>
+              <TypeWriter
+                strings={[
+                  "Software Engineer.",
+                  "Data Engineer.",
+                  "Systems Consultant.",
+                  "I build things that work.",
+                ]}
+                speed={55}
+              />
+            </h2>
 
-          <div
-            style={{
-              marginTop: 52,
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 28,
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              paddingTop: 28,
-            }}
-          >
-            {[
-              {e: "☕", t: "Coffee-powered"},
-              {e: "🏔", t: "Blue Ridge hiker"},
-              {e: "🎓", t: "Duke MCA '27"},
-              {e: "📍", t: "Morganton, NC"},
-            ].map((d) => (
-              <div
-                key={d.t}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 7,
-                  color: "rgba(255,255,255,0.25)",
-                  fontSize: 12,
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
-              >
-                <span>{d.e}</span>
-                {d.t}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div
-          style={{
-            animation: "slideUp 0.8s ease 0.18s both",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              position: "relative",
-              width: 380,
-              height: 420,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
+            <p
               style={{
-                position: "relative",
-                width: 300,
-                height: 300,
-                flexShrink: 0,
+                color: T.muted,
+                lineHeight: 1.88,
+                maxWidth: 520,
+                margin: "0 0 12px",
+                fontSize: "clamp(14px,2vw,16px)",
+                fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              <svg
-                viewBox="0 0 300 300"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  animation: "spinSlow 18s linear infinite",
-                }}
-                aria-hidden="true"
-              >
-                <circle
-                  cx="150"
-                  cy="150"
-                  r="140"
-                  fill="none"
-                  stroke="rgba(201,168,76,0.18)"
-                  strokeWidth="1"
-                  strokeDasharray="6 10"
-                />
-              </svg>
-              <svg
-                viewBox="0 0 300 300"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  animation: "spinSlow 28s linear infinite reverse",
-                }}
-                aria-hidden="true"
-              >
-                <circle
-                  cx="150"
-                  cy="150"
-                  r="126"
-                  fill="none"
-                  stroke="rgba(201,168,76,0.10)"
-                  strokeWidth="1"
-                  strokeDasharray="2 16"
-                />
-              </svg>
+              I'm a software engineer who enjoys solving messy problems with
+              clean systems. Over 9 years across finance, government consulting,
+              and freelance work, building automation tools that save real hours
+              and full-stack products used by real customers every day.
+            </p>
+            <p
+              style={{
+                color: T.faint,
+                lineHeight: 1.88,
+                maxWidth: 520,
+                margin: "0 0 36px",
+                fontSize: "clamp(13px,1.8vw,15px)",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            >
+              When I'm not coding, I'm usually hiking the Blue Ridge, deep in a
+              data rabbit hole, or trying to finally learn Rust.
+            </p>
 
-              {[0, 72, 144, 216, 288].map((deg, i) => {
-                const rad = (deg * Math.PI) / 180;
-                const cx = 150 + 140 * Math.cos(rad - Math.PI / 2);
-                const cy = 150 + 140 * Math.sin(rad - Math.PI / 2);
-                const icons = ["💻", "⚙️", "📊", "☁️", "🔌"];
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      left: `${(cx / 300) * 100}%`,
-                      top: `${(cy / 300) * 100}%`,
-                      transform: "translate(-50%, -50%)",
-                      width: 36,
-                      height: 36,
-                      borderRadius: "50%",
-                      background: "rgba(10,10,15,0.92)",
-                      border: `1px solid ${T.goldBdr}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 14,
-                      animation: `fadeIn 0.5s ease ${i * 0.1 + 0.5}s both`,
-                    }}
-                  >
-                    {icons[i]}
-                  </div>
-                );
-              })}
-
-              <div
+            <div style={{display: "flex", gap: 14, flexWrap: "wrap"}}>
+              <a
+                href="#contact"
+                className="btn-primary"
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: 220,
-                  height: 220,
-                  borderRadius: "50%",
-                  padding: 4,
-                  background: `linear-gradient(135deg, ${T.gold} 0%, rgba(129,140,248,0.6) 50%, ${T.gold} 100%)`,
+                  padding: "14px clamp(20px,4vw,36px)",
+                  background: T.gold,
+                  color: T.ink,
+                  borderRadius: 4,
+                  fontWeight: 700,
+                  fontSize: "clamp(11px,1.5vw,12px)",
+                  textDecoration: "none",
+                  letterSpacing: "0.12em",
+                  fontFamily: "'Syne', sans-serif",
+                  textTransform: "uppercase",
+                  transition: "all 0.2s",
+                  display: "inline-block",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = T.cream;
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 36px rgba(201,168,76,0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = T.gold;
+                  e.currentTarget.style.transform = "";
+                  e.currentTarget.style.boxShadow = "";
                 }}
               >
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    background: T.ink3,
-                  }}
-                >
-                  <img
-                    src="/image.png"
-                    alt="Jordan Morris"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                      e.target.parentNode.innerHTML =
-                        '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#141424;font-size:44px;font-weight:700;color:#c9a84c;font-family:Cormorant Garamond,serif">JM</div>';
-                    }}
-                  />
-                </div>
-              </div>
+                Let's Talk →
+              </a>
+              <a
+                href="#projects"
+                style={{
+                  padding: "14px clamp(20px,4vw,36px)",
+                  borderRadius: 4,
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  color: T.muted,
+                  fontSize: "clamp(11px,1.5vw,12px)",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontFamily: "'Syne', sans-serif",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = T.goldBdr;
+                  e.currentTarget.style.color = T.gold;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                  e.currentTarget.style.color = T.muted;
+                }}
+              >
+                See My Work
+              </a>
             </div>
 
             <div
               style={{
-                marginTop: 28,
-                width: "100%",
-                background: "rgba(14,14,22,0.88)",
-                border: `1px solid ${T.goldBdr}`,
-                borderRadius: 12,
-                padding: "20px 24px",
-                position: "relative",
-                overflow: "hidden",
+                marginTop: 40,
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "12px 20px",
+                borderTop: "1px solid rgba(255,255,255,0.06)",
+                paddingTop: 24,
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 2,
-                  background: `linear-gradient(90deg, ${T.gold}, transparent)`,
-                }}
-              />
-              <div style={{textAlign: "center", marginBottom: 16}}>
+              {[
+                {e: "☕", t: "Coffee-powered"},
+                {e: "🏔", t: "Blue Ridge hiker"},
+                {e: "🎓", t: "Duke MCA '27"},
+                {e: "📍", t: "Morganton, NC"},
+              ].map((d) => (
                 <div
+                  key={d.t}
                   style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontWeight: 700,
-                    fontSize: 20,
-                    color: T.white,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 7,
+                    color: "rgba(255,255,255,0.25)",
+                    fontSize: "clamp(11px,1.5vw,12px)",
+                    fontFamily: "'DM Sans', sans-serif",
                   }}
                 >
-                  Jordan Morris
+                  <span>{d.e}</span>
+                  {d.t}
                 </div>
-                <div
-                  style={{
-                    color: T.gold,
-                    fontSize: 11,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    fontFamily: "'Syne', sans-serif",
-                    marginTop: 3,
-                  }}
-                >
-                  Software & Data Engineer
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card column */}
+          <div className="hero-card-wrap">
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                maxWidth: 380,
+                margin: "0 auto",
+              }}
+            >
+              {/* Portrait orb */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                  gap: 8,
+                  position: "relative",
+                  width: "clamp(200px, 55vw, 280px)",
+                  height: "clamp(200px, 55vw, 280px)",
+                  flexShrink: 0,
                 }}
               >
-                {stats.map((s) => (
+                <svg
+                  viewBox="0 0 300 300"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    animation: "spinSlow 18s linear infinite",
+                  }}
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="150"
+                    cy="150"
+                    r="140"
+                    fill="none"
+                    stroke="rgba(201,168,76,0.18)"
+                    strokeWidth="1"
+                    strokeDasharray="6 10"
+                  />
+                </svg>
+                <svg
+                  viewBox="0 0 300 300"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    animation: "spinSlow 28s linear infinite reverse",
+                  }}
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="150"
+                    cy="150"
+                    r="126"
+                    fill="none"
+                    stroke="rgba(201,168,76,0.10)"
+                    strokeWidth="1"
+                    strokeDasharray="2 16"
+                  />
+                </svg>
+                {[0, 72, 144, 216, 288].map((deg, i) => {
+                  const rad = (deg * Math.PI) / 180;
+                  const cx = 150 + 140 * Math.cos(rad - Math.PI / 2);
+                  const cy = 150 + 140 * Math.sin(rad - Math.PI / 2);
+                  const icons = ["💻", "⚙️", "📊", "☁️", "🔌"];
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        position: "absolute",
+                        left: `${(cx / 300) * 100}%`,
+                        top: `${(cy / 300) * 100}%`,
+                        transform: "translate(-50%, -50%)",
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        background: "rgba(10,10,15,0.92)",
+                        border: `1px solid ${T.goldBdr}`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 13,
+                        animation: `fadeIn 0.5s ease ${i * 0.1 + 0.5}s both`,
+                      }}
+                    >
+                      {icons[i]}
+                    </div>
+                  );
+                })}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "74%",
+                    height: "74%",
+                    borderRadius: "50%",
+                    padding: 3,
+                    background: `linear-gradient(135deg, ${T.gold} 0%, rgba(129,140,248,0.6) 50%, ${T.gold} 100%)`,
+                  }}
+                >
                   <div
-                    key={s.label}
                     style={{
-                      textAlign: "center",
-                      padding: "10px 6px",
-                      background: "rgba(201,168,76,0.06)",
-                      border: "1px solid rgba(201,168,76,0.12)",
-                      borderRadius: 8,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      background: T.ink3,
                     }}
                   >
-                    <div
+                    <img
+                      src="/image.png"
+                      alt="Jordan Morris"
                       style={{
-                        fontSize: 18,
-                        fontWeight: 700,
-                        color: T.gold,
-                        fontFamily: "'Cormorant Garamond', serif",
-                        lineHeight: 1,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
                       }}
-                    >
-                      {s.num}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 8,
-                        color: T.faint,
-                        marginTop: 4,
-                        letterSpacing: "0.08em",
-                        fontFamily: "'Syne', sans-serif",
-                        textTransform: "uppercase",
-                        lineHeight: 1.3,
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.parentNode.innerHTML =
+                          '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#141424;font-size:36px;font-weight:700;color:#c9a84c;font-family:Cormorant Garamond,serif">JM</div>';
                       }}
-                    >
-                      {s.label}
-                    </div>
+                    />
                   </div>
-                ))}
+                </div>
               </div>
-              <div style={{display: "flex", gap: 8, marginTop: 12}}>
-                {[
-                  {label: "GitHub", icon: "GH", href: "https://github.com"},
-                  {
-                    label: "LinkedIn",
-                    icon: "LI",
-                    href: "https://www.linkedin.com/in/jordan-morris-6a0869408/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY53wQBOcRSm86g54JfeSnw%3D%3D",
-                  },
-                  {
-                    label: "Email",
-                    icon: "@",
-                    href: "mailto:jordan.morris@example.com",
-                  },
-                ].map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
+
+              {/* Info card */}
+              <div
+                style={{
+                  marginTop: 20,
+                  width: "100%",
+                  background: "rgba(14,14,22,0.88)",
+                  border: `1px solid ${T.goldBdr}`,
+                  borderRadius: 12,
+                  padding: "18px 20px",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    background: `linear-gradient(90deg, ${T.gold}, transparent)`,
+                  }}
+                />
+                <div style={{textAlign: "center", marginBottom: 14}}>
+                  <div
                     style={{
-                      flex: 1,
-                      padding: "9px 0",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      borderRadius: 6,
-                      textAlign: "center",
-                      fontSize: 11,
-                      fontWeight: 600,
-                      color: T.faint,
-                      textDecoration: "none",
-                      fontFamily: "'Syne', sans-serif",
-                      letterSpacing: "0.06em",
-                      transition: "all 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = T.goldBdr;
-                      e.currentTarget.style.color = T.gold;
-                      e.currentTarget.style.background = T.goldDim;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(255,255,255,0.07)";
-                      e.currentTarget.style.color = T.faint;
-                      e.currentTarget.style.background = "";
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 700,
+                      fontSize: "clamp(16px,3.5vw,20px)",
+                      color: T.white,
                     }}
                   >
-                    {s.icon}
-                  </a>
-                ))}
+                    Jordan Morris
+                  </div>
+                  <div
+                    style={{
+                      color: T.gold,
+                      fontSize: 10,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      fontFamily: "'Syne', sans-serif",
+                      marginTop: 3,
+                    }}
+                  >
+                    Software & Data Engineer
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(4, 1fr)",
+                    gap: 6,
+                  }}
+                >
+                  {stats.map((s) => (
+                    <div
+                      key={s.label}
+                      style={{
+                        textAlign: "center",
+                        padding: "8px 4px",
+                        background: "rgba(201,168,76,0.06)",
+                        border: "1px solid rgba(201,168,76,0.12)",
+                        borderRadius: 7,
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "clamp(14px,3vw,18px)",
+                          fontWeight: 700,
+                          color: T.gold,
+                          fontFamily: "'Cormorant Garamond', serif",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {s.num}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "clamp(7px,1.5vw,8px)",
+                          color: T.faint,
+                          marginTop: 3,
+                          letterSpacing: "0.06em",
+                          fontFamily: "'Syne', sans-serif",
+                          textTransform: "uppercase",
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{display: "flex", gap: 8, marginTop: 10}}>
+                  {[
+                    {label: "GitHub", icon: "GH", href: "https://github.com"},
+                    {
+                      label: "LinkedIn",
+                      icon: "LI",
+                      href: "https://www.linkedin.com/in/jordan-morris-6a0869408/",
+                    },
+                    {
+                      label: "Email",
+                      icon: "@",
+                      href: "mailto:jordan.morris@example.com",
+                    },
+                  ].map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      aria-label={s.label}
+                      style={{
+                        flex: 1,
+                        padding: "8px 0",
+                        border: "1px solid rgba(255,255,255,0.07)",
+                        borderRadius: 6,
+                        textAlign: "center",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: T.faint,
+                        textDecoration: "none",
+                        fontFamily: "'Syne', sans-serif",
+                        letterSpacing: "0.06em",
+                        transition: "all 0.2s",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = T.goldBdr;
+                        e.currentTarget.style.color = T.gold;
+                        e.currentTarget.style.background = T.goldDim;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255,255,255,0.07)";
+                        e.currentTarget.style.color = T.faint;
+                        e.currentTarget.style.background = "";
+                      }}
+                    >
+                      {s.icon}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Scroll indicator */}
       <div
         style={{
           position: "absolute",
-          bottom: 36,
+          bottom: 28,
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
@@ -982,7 +982,7 @@ function HeroSection() {
         <div
           style={{
             width: 1,
-            height: 48,
+            height: 40,
             background: `linear-gradient(to bottom, ${T.gold}, transparent)`,
             animation: "breathe 2s ease-in-out infinite",
           }}
@@ -999,18 +999,18 @@ function AboutSection() {
       id="about"
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink2,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
     >
       <div style={{maxWidth: 1160, margin: "0 auto"}}>
         <div
-          className="about-grid"
+          className="two-col-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: 80,
+            gap: "clamp(32px,5vw,80px)",
             alignItems: "start",
           }}
         >
@@ -1027,7 +1027,7 @@ function AboutSection() {
                 marginTop: 36,
                 display: "flex",
                 flexDirection: "column",
-                gap: 12,
+                gap: 10,
               }}
             >
               {[
@@ -1054,8 +1054,8 @@ function AboutSection() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 16,
-                    padding: "16px 20px",
+                    gap: 14,
+                    padding: "14px 16px",
                     background: T.ghost,
                     border: "1px solid rgba(255,255,255,0.05)",
                     borderRadius: 8,
@@ -1072,11 +1072,11 @@ function AboutSection() {
                     e.currentTarget.style.background = T.ghost;
                   }}
                 >
-                  <span style={{fontSize: 18, flexShrink: 0}}>{c.icon}</span>
+                  <span style={{fontSize: 16, flexShrink: 0}}>{c.icon}</span>
                   <span
                     style={{
                       color: T.muted,
-                      fontSize: 14,
+                      fontSize: "clamp(13px,1.8vw,14px)",
                       fontFamily: "'DM Sans', sans-serif",
                       lineHeight: 1.5,
                     }}
@@ -1088,7 +1088,7 @@ function AboutSection() {
             </div>
             <div
               style={{
-                marginTop: 24,
+                marginTop: 20,
                 display: "flex",
                 flexDirection: "column",
                 gap: 10,
@@ -1115,8 +1115,8 @@ function AboutSection() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 16,
-                    padding: "16px 20px",
+                    gap: 14,
+                    padding: "14px 16px",
                     background: T.ghost,
                     border: "1px solid rgba(255,255,255,0.05)",
                     borderRadius: 8,
@@ -1125,7 +1125,12 @@ function AboutSection() {
                 >
                   <div style={{flex: 1}}>
                     <div
-                      style={{display: "flex", alignItems: "center", gap: 8}}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                        flexWrap: "wrap",
+                      }}
                     >
                       <span
                         style={{
@@ -1182,7 +1187,7 @@ function AboutSection() {
                 background: T.ghost,
                 border: `1px solid ${T.goldBdr}`,
                 borderRadius: 12,
-                padding: 40,
+                padding: "clamp(24px,4vw,40px)",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -1202,7 +1207,7 @@ function AboutSection() {
                   style={{
                     color: T.muted,
                     lineHeight: 1.95,
-                    fontSize: 16,
+                    fontSize: "clamp(14px,2vw,16px)",
                     fontFamily: "'DM Sans', sans-serif",
                     margin: "0 0 20px",
                   }}
@@ -1215,7 +1220,7 @@ function AboutSection() {
                   style={{
                     color: T.faint,
                     lineHeight: 1.95,
-                    fontSize: 15,
+                    fontSize: "clamp(13px,1.8vw,15px)",
                     fontFamily: "'DM Sans', sans-serif",
                     margin: "0 0 20px",
                   }}
@@ -1228,7 +1233,7 @@ function AboutSection() {
                   style={{
                     color: "rgba(255,255,255,0.28)",
                     lineHeight: 1.95,
-                    fontSize: 14,
+                    fontSize: "clamp(12px,1.6vw,14px)",
                     fontFamily: "'DM Sans', sans-serif",
                     fontStyle: "italic",
                     margin: 0,
@@ -1253,7 +1258,7 @@ function ProjectsSection() {
       id="projects"
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -1268,9 +1273,10 @@ function ProjectsSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 24,
-            marginTop: 60,
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+            gap: 20,
+            marginTop: 52,
           }}
         >
           {projects.map((p, i) => (
@@ -1280,7 +1286,7 @@ function ProjectsSection() {
                 background: "rgba(14,14,22,0.88)",
                 border: `1px solid ${p.color}1a`,
                 borderRadius: 12,
-                padding: 36,
+                padding: "clamp(20px,3vw,36px)",
                 position: "relative",
                 overflow: "hidden",
                 opacity: inView ? 1 : 0,
@@ -1290,8 +1296,8 @@ function ProjectsSection() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = p.color + "44";
-                e.currentTarget.style.transform = "translateY(-6px)";
-                e.currentTarget.style.boxShadow = `0 24px 60px ${p.color}0a`;
+                e.currentTarget.style.transform = "translateY(-4px)";
+                e.currentTarget.style.boxShadow = `0 20px 50px ${p.color}0a`;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = p.color + "1a";
@@ -1314,20 +1320,20 @@ function ProjectsSection() {
                   display: "flex",
                   alignItems: "flex-start",
                   justifyContent: "space-between",
-                  marginBottom: 20,
+                  marginBottom: 18,
                 }}
               >
                 <div
                   style={{
-                    width: 48,
-                    height: 48,
+                    width: 44,
+                    height: 44,
                     borderRadius: 8,
                     background: p.color + "14",
                     border: `1px solid ${p.color}22`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 22,
+                    fontSize: 20,
                     color: p.color,
                     fontWeight: 700,
                   }}
@@ -1354,9 +1360,9 @@ function ProjectsSection() {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontWeight: 700,
-                  fontSize: 20,
+                  fontSize: "clamp(17px,2.5vw,20px)",
                   color: T.white,
-                  margin: "0 0 14px",
+                  margin: "0 0 12px",
                   lineHeight: 1.2,
                 }}
               >
@@ -1365,10 +1371,10 @@ function ProjectsSection() {
               <p
                 style={{
                   color: T.muted,
-                  fontSize: 14,
+                  fontSize: "clamp(13px,1.8vw,14px)",
                   lineHeight: 1.85,
                   fontFamily: "'DM Sans', sans-serif",
-                  margin: "0 0 24px",
+                  margin: "0 0 22px",
                 }}
               >
                 {p.story}
@@ -1379,7 +1385,9 @@ function ProjectsSection() {
                   alignItems: "center",
                   justifyContent: "space-between",
                   borderTop: "1px solid rgba(255,255,255,0.05)",
-                  paddingTop: 18,
+                  paddingTop: 16,
+                  flexWrap: "wrap",
+                  gap: 10,
                 }}
               >
                 <div style={{display: "flex", flexWrap: "wrap", gap: 6}}>
@@ -1388,7 +1396,7 @@ function ProjectsSection() {
                       key={tag}
                       style={{
                         fontSize: 10,
-                        padding: "3px 10px",
+                        padding: "3px 9px",
                         borderRadius: 2,
                         background: p.color + "0e",
                         color: p.color,
@@ -1409,7 +1417,6 @@ function ProjectsSection() {
                     fontFamily: "'Syne', sans-serif",
                     fontWeight: 600,
                     whiteSpace: "nowrap",
-                    marginLeft: 16,
                     padding: "5px 12px",
                     background: p.color + "0e",
                     borderRadius: 4,
@@ -1434,7 +1441,7 @@ function ExperienceSection() {
       id="experience"
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink2,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -1445,7 +1452,7 @@ function ExperienceSection() {
           title="Where I've Worked"
           subtitle="Nine years across three very different environments. Each one taught me something the others couldn't."
         />
-        <div style={{marginTop: 64, position: "relative"}}>
+        <div style={{marginTop: 56, position: "relative"}}>
           <div
             className="timeline-line"
             style={{
@@ -1467,7 +1474,7 @@ function ExperienceSection() {
                 style={{
                   display: "flex",
                   justifyContent: isLeft ? "flex-start" : "flex-end",
-                  marginBottom: 60,
+                  marginBottom: 48,
                   position: "relative",
                   opacity: inView ? 1 : 0,
                   transform: inView
@@ -1478,11 +1485,11 @@ function ExperienceSection() {
               >
                 <article
                   style={{
-                    width: "calc(50% - 40px)",
+                    width: "calc(50% - 36px)",
                     background: "rgba(14,14,22,0.9)",
                     border: `1px solid ${exp.color}1e`,
                     borderRadius: 12,
-                    padding: 32,
+                    padding: "clamp(18px,2.5vw,32px)",
                     position: "relative",
                     backdropFilter: "blur(20px)",
                   }}
@@ -1509,13 +1516,15 @@ function ExperienceSection() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      marginBottom: 18,
+                      marginBottom: 16,
+                      flexWrap: "wrap",
+                      gap: 8,
                     }}
                   >
                     <span
                       style={{
                         fontSize: 10,
-                        padding: "5px 12px",
+                        padding: "4px 10px",
                         borderRadius: 2,
                         background: exp.accent,
                         color: exp.color,
@@ -1541,7 +1550,7 @@ function ExperienceSection() {
                     style={{
                       fontFamily: "'Cormorant Garamond', serif",
                       fontWeight: 700,
-                      fontSize: 20,
+                      fontSize: "clamp(16px,2.2vw,20px)",
                       color: T.white,
                       margin: "0 0 4px",
                     }}
@@ -1554,7 +1563,7 @@ function ExperienceSection() {
                       fontSize: 12,
                       fontWeight: 600,
                       fontFamily: "'Syne', sans-serif",
-                      margin: "0 0 16px",
+                      margin: "0 0 14px",
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
                     }}
@@ -1564,13 +1573,13 @@ function ExperienceSection() {
                   <p
                     style={{
                       color: T.muted,
-                      fontSize: 14,
+                      fontSize: "clamp(12px,1.8vw,14px)",
                       lineHeight: 1.85,
                       fontFamily: "'DM Sans', sans-serif",
-                      margin: "0 0 18px",
+                      margin: "0 0 16px",
                       fontStyle: "italic",
                       borderLeft: `2px solid ${exp.color}33`,
-                      paddingLeft: 14,
+                      paddingLeft: 12,
                     }}
                   >
                     {exp.story}
@@ -1583,9 +1592,9 @@ function ExperienceSection() {
                           display: "flex",
                           alignItems: "flex-start",
                           gap: 10,
-                          marginBottom: 9,
+                          marginBottom: 8,
                           color: "rgba(255,255,255,0.5)",
-                          fontSize: 13,
+                          fontSize: "clamp(12px,1.6vw,13px)",
                           fontFamily: "'DM Sans', sans-serif",
                           lineHeight: 1.6,
                         }}
@@ -1610,7 +1619,7 @@ function ExperienceSection() {
                   style={{
                     position: "absolute",
                     left: "50%",
-                    top: 28,
+                    top: 24,
                     transform: "translateX(-50%)",
                     width: 13,
                     height: 13,
@@ -1636,7 +1645,7 @@ function SkillsSection() {
       id="skills"
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -1651,9 +1660,10 @@ function SkillsSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 16,
-            marginTop: 60,
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
+            gap: 14,
+            marginTop: 52,
           }}
         >
           {skills.map((cat, i) => (
@@ -1663,7 +1673,7 @@ function SkillsSection() {
                 background: "rgba(14,14,22,0.88)",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 10,
-                padding: 28,
+                padding: "clamp(18px,2.5vw,28px)",
                 opacity: inView ? 1 : 0,
                 transform: inView ? "none" : "translateY(24px)",
                 transition: `all 0.55s ease ${i * 0.07}s`,
@@ -1682,7 +1692,7 @@ function SkillsSection() {
                   fontFamily: "'Syne', sans-serif",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  marginBottom: 16,
+                  marginBottom: 14,
                   fontWeight: 600,
                 }}
               >
@@ -1697,7 +1707,7 @@ function SkillsSection() {
                       alignItems: "center",
                       gap: 10,
                       color: T.muted,
-                      fontSize: 14,
+                      fontSize: "clamp(13px,1.8vw,14px)",
                       fontFamily: "'DM Sans', sans-serif",
                     }}
                   >
@@ -1728,7 +1738,7 @@ function WhyMeSection() {
     <section
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink2,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -1743,9 +1753,10 @@ function WhyMeSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 20,
-            marginTop: 60,
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
+            gap: 18,
+            marginTop: 52,
           }}
         >
           {whyMe.map((w, i) => (
@@ -1755,7 +1766,7 @@ function WhyMeSection() {
                 background: "rgba(14,14,22,0.88)",
                 border: `1px solid ${T.goldBdr}`,
                 borderRadius: 10,
-                padding: 32,
+                padding: "clamp(20px,3vw,32px)",
                 position: "relative",
                 overflow: "hidden",
                 opacity: inView ? 1 : 0,
@@ -1775,9 +1786,9 @@ function WhyMeSection() {
               />
               <div
                 style={{
-                  fontSize: 28,
+                  fontSize: 26,
                   color: T.gold,
-                  marginBottom: 16,
+                  marginBottom: 14,
                   fontWeight: 700,
                 }}
               >
@@ -1787,9 +1798,9 @@ function WhyMeSection() {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontWeight: 700,
-                  fontSize: 18,
+                  fontSize: "clamp(16px,2.2vw,18px)",
                   color: T.white,
-                  margin: "0 0 12px",
+                  margin: "0 0 10px",
                 }}
               >
                 {w.title}
@@ -1797,7 +1808,7 @@ function WhyMeSection() {
               <p
                 style={{
                   color: T.muted,
-                  fontSize: 14,
+                  fontSize: "clamp(13px,1.8vw,14px)",
                   lineHeight: 1.85,
                   fontFamily: "'DM Sans', sans-serif",
                   margin: 0,
@@ -1819,7 +1830,7 @@ function TestimonialsSection() {
     <section
       ref={ref}
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink,
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -1834,9 +1845,10 @@ function TestimonialsSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 24,
-            marginTop: 60,
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+            gap: 20,
+            marginTop: 52,
           }}
         >
           {testimonials.map((t, i) => (
@@ -1846,7 +1858,7 @@ function TestimonialsSection() {
                 background: "rgba(14,14,22,0.90)",
                 border: `1px solid ${t.color}1e`,
                 borderRadius: 12,
-                padding: 36,
+                padding: "clamp(20px,3vw,36px)",
                 margin: 0,
                 position: "relative",
                 overflow: "hidden",
@@ -1865,7 +1877,7 @@ function TestimonialsSection() {
                   background: `linear-gradient(90deg, ${t.color}, transparent)`,
                 }}
               />
-              <div style={{display: "flex", gap: 3, marginBottom: 20}}>
+              <div style={{display: "flex", gap: 3, marginBottom: 18}}>
                 {Array(t.stars)
                   .fill(0)
                   .map((_, j) => (
@@ -1874,11 +1886,11 @@ function TestimonialsSection() {
                     </span>
                   ))}
               </div>
-              <blockquote style={{margin: "0 0 28px", padding: 0}}>
+              <blockquote style={{margin: "0 0 24px", padding: 0}}>
                 <p
                   style={{
                     color: T.muted,
-                    fontSize: 15,
+                    fontSize: "clamp(13px,1.8vw,15px)",
                     lineHeight: 1.9,
                     fontFamily: "'DM Sans', sans-serif",
                     fontStyle: "italic",
@@ -1888,19 +1900,19 @@ function TestimonialsSection() {
                 </p>
               </blockquote>
               <figcaption
-                style={{display: "flex", alignItems: "center", gap: 14}}
+                style={{display: "flex", alignItems: "center", gap: 12}}
               >
                 <div
                   style={{
-                    width: 42,
-                    height: 42,
+                    width: 40,
+                    height: 40,
                     borderRadius: "50%",
                     background: t.color + "20",
                     border: `1px solid ${t.color}33`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 13,
+                    fontSize: 12,
                     fontWeight: 700,
                     color: t.color,
                     fontFamily: "'Syne', sans-serif",
@@ -1975,12 +1987,12 @@ function ContactSection() {
   const inp = (field, placeholder, multiline) => {
     const base = {
       width: "100%",
-      padding: "14px 18px",
+      padding: "13px 16px",
       background: "rgba(255,255,255,0.04)",
       border: `1px solid ${errors[field] ? "#f87171" : "rgba(255,255,255,0.09)"}`,
       borderRadius: 6,
       color: T.white,
-      fontSize: 14,
+      fontSize: "clamp(13px,2vw,14px)",
       fontFamily: "'DM Sans', sans-serif",
       outline: "none",
       boxSizing: "border-box",
@@ -2017,7 +2029,7 @@ function ContactSection() {
     <section
       id="contact"
       style={{
-        padding: "110px 40px",
+        padding: "clamp(64px,8vw,110px) clamp(16px,4vw,40px)",
         background: T.ink2,
         borderTop: "1px solid rgba(255,255,255,0.04)",
         position: "relative",
@@ -2030,8 +2042,8 @@ function ContactSection() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
-          width: 700,
-          height: 700,
+          width: "min(700px, 90vw)",
+          height: "min(700px, 90vw)",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 68%)",
@@ -2047,7 +2059,7 @@ function ContactSection() {
           zIndex: 1,
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: 80,
+          gap: "clamp(32px,5vw,80px)",
           alignItems: "start",
         }}
       >
@@ -2059,10 +2071,10 @@ function ContactSection() {
           />
           <div
             style={{
-              marginTop: 44,
+              marginTop: 36,
               display: "flex",
               flexDirection: "column",
-              gap: 16,
+              gap: 14,
             }}
           >
             {[
@@ -2076,7 +2088,7 @@ function ContactSection() {
                 icon: "💼",
                 label: "LinkedIn",
                 value: "linkedin.com/in/jordanmorris",
-                href: "https://www.linkedin.com/in/jordan-morris-6a0869408/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY53wQBOcRSm86g54JfeSnw%3D%3D",
+                href: "https://www.linkedin.com/in/jordan-morris-6a0869408/",
               },
               {
                 icon: "⌥",
@@ -2092,8 +2104,8 @@ function ContactSection() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 16,
-                  padding: "16px 20px",
+                  gap: 14,
+                  padding: "14px 16px",
                   background: T.ghost,
                   border: "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 8,
@@ -2113,8 +2125,9 @@ function ContactSection() {
                   style={{
                     fontSize: 18,
                     color: T.gold,
-                    width: 28,
+                    width: 26,
                     textAlign: "center",
+                    flexShrink: 0,
                   }}
                 >
                   {l.icon}
@@ -2135,8 +2148,9 @@ function ContactSection() {
                   <div
                     style={{
                       color: T.muted,
-                      fontSize: 13,
+                      fontSize: "clamp(12px,1.8vw,13px)",
                       fontFamily: "'DM Sans', sans-serif",
+                      wordBreak: "break-all",
                     }}
                   >
                     {l.value}
@@ -2148,8 +2162,8 @@ function ContactSection() {
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: 24,
-                padding: "16px 0",
+                gap: 16,
+                padding: "14px 0",
                 borderTop: "1px solid rgba(255,255,255,0.05)",
               }}
             >
@@ -2182,7 +2196,7 @@ function ContactSection() {
             background: "rgba(14,14,22,0.90)",
             border: `1px solid ${T.goldBdr}`,
             borderRadius: 12,
-            padding: 40,
+            padding: "clamp(24px,3vw,40px)",
             position: "relative",
             overflow: "hidden",
           }}
@@ -2239,14 +2253,14 @@ function ContactSection() {
               </button>
             </div>
           ) : (
-            <div style={{display: "flex", flexDirection: "column", gap: 18}}>
+            <div style={{display: "flex", flexDirection: "column", gap: 16}}>
               <h3
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontWeight: 700,
-                  fontSize: 20,
+                  fontSize: "clamp(17px,2.5vw,20px)",
                   color: T.white,
-                  margin: "0 0 4px",
+                  margin: "0 0 2px",
                 }}
               >
                 Send a message
@@ -2310,7 +2324,7 @@ function ContactSection() {
                 onClick={handleSubmit}
                 disabled={sending}
                 style={{
-                  padding: "16px",
+                  padding: "15px",
                   background: sending ? T.goldDim : T.gold,
                   color: T.ink,
                   border: "none",
@@ -2349,7 +2363,7 @@ function Footer() {
   return (
     <footer
       style={{
-        padding: "48px 40px",
+        padding: "40px clamp(16px,4vw,40px)",
         background: "#060609",
         borderTop: "1px solid rgba(255,255,255,0.04)",
       }}
@@ -2388,7 +2402,7 @@ function Footer() {
             © 2025 Jordan Morris · Software & Data Engineer
           </p>
         </div>
-        <div style={{display: "flex", gap: 28}}>
+        <div style={{display: "flex", gap: 24}}>
           {["GitHub", "LinkedIn", "Email"].map((l) => (
             <a
               target="blank"
@@ -2435,7 +2449,7 @@ function SectionLabel({label, title, subtitle, center}) {
           display: "inline-flex",
           alignItems: "center",
           gap: 10,
-          marginBottom: 16,
+          marginBottom: 14,
         }}
       >
         <div style={{width: 20, height: 1, background: T.gold}} />
@@ -2457,7 +2471,7 @@ function SectionLabel({label, title, subtitle, center}) {
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontWeight: 700,
-          fontSize: "clamp(30px, 3.2vw, 48px)",
+          fontSize: "clamp(26px, 4vw, 48px)",
           letterSpacing: "-0.01em",
           color: T.white,
           margin: 0,
@@ -2470,7 +2484,7 @@ function SectionLabel({label, title, subtitle, center}) {
         <p
           style={{
             color: T.muted,
-            fontSize: 15,
+            fontSize: "clamp(13px,2vw,15px)",
             marginTop: 14,
             fontFamily: "'DM Sans', sans-serif",
             lineHeight: 1.75,
@@ -2498,33 +2512,87 @@ export default function App() {
         ::-webkit-scrollbar-track { background: #0a0a0f; }
         ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.35); border-radius: 2px; }
         ::selection { background: rgba(201,168,76,0.25); color: #f0ead8; }
+
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes slideUp { from { opacity:0; transform:translateY(36px) } to { opacity:1; transform:none } }
         @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
         @keyframes breathe { 0%,100%{opacity:1} 50%{opacity:0.3} }
-        @keyframes pulseRing { 0%{box-shadow:0 0 0 0 rgba(74,222,128,0.6)} 70%{box-shadow:0 0 0 8px rgba(74,222,128,0)} 100%{box-shadow:0 0 0 0 rgba(74,222,128,0)} }
         @keyframes spinSlow { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
         textarea { font-family: 'DM Sans', sans-serif !important; }
         input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
-        @media (max-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 44px !important; }
-          .about-grid { grid-template-columns: 1fr !important; }
-          .contact-grid { grid-template-columns: 1fr !important; }
-          .exp-row { justify-content: center !important; }
-          .exp-row > article { width: 100% !important; }
-          .timeline-line, .timeline-dot { display: none !important; }
+
+        /* ─── HERO LAYOUT ─── */
+        .hero-layout {
+          display: grid;
+          grid-template-columns: 1fr 460px;
+          gap: clamp(32px, 5vw, 80px);
+          align-items: center;
+        }
+        .hero-card-wrap { display: flex; justify-content: center; }
+
+        /* ─── DESKTOP NAV ─── */
+        .nav-links { display: flex !important; }
+        .nav-toggle { display: none !important; }
+        .hire-btn { display: inline-block !important; }
+
+        /* ─── TABLET: 768–1024px ─── */
+        @media (max-width: 1024px) {
+          .hero-layout {
+            grid-template-columns: 1fr 380px;
+            gap: 40px;
+          }
+        }
+
+        /* ─── MOBILE: ≤767px ─── */
+        @media (max-width: 767px) {
+          /* Hero: stack vertically, card first on mobile (reorder) */
+          .hero-layout {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          .hero-card-wrap {
+            order: -1;
+          }
+          /* Two-col sections go single col */
+          .two-col-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+          /* Contact grid */
+          .contact-grid {
+            grid-template-columns: 1fr !important;
+            gap: 36px !important;
+          }
+          /* Experience timeline goes stacked */
+          .exp-row {
+            justify-content: center !important;
+          }
+          .exp-row > article {
+            width: 100% !important;
+          }
+          .timeline-line, .timeline-dot {
+            display: none !important;
+          }
+          /* Nav */
           .nav-links { display: none !important; }
           .nav-toggle { display: block !important; }
+          .hire-btn { display: none !important; }
         }
-        @media (max-width: 600px) {
-          section { padding-left: 20px !important; padding-right: 20px !important; }
-          nav { padding-left: 20px !important; padding-right: 20px !important; }
-          footer { padding-left: 20px !important; padding-right: 20px !important; }
+
+        /* ─── SMALL MOBILE: ≤480px ─── */
+        @media (max-width: 480px) {
+          .hero-layout { gap: 28px !important; }
         }
+
+        /* ─── ACCESSIBILITY ─── */
         @media (prefers-reduced-motion: reduce) {
           * { animation: none !important; transition: none !important; }
         }
-        a:focus-visible, button:focus-visible { outline: 2px solid #c9a84c; outline-offset: 3px; border-radius: 2px; }
+        a:focus-visible, button:focus-visible {
+          outline: 2px solid #c9a84c;
+          outline-offset: 3px;
+          border-radius: 2px;
+        }
       `}</style>
       <ScrollProgress />
       <NavBar />
